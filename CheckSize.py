@@ -25,36 +25,60 @@ def list_files(startpath):
 
 
 # Function to check line length in file
+# Input: g_l_n = file_name
 # Return = number of char if it's too long and number in line
-def check_line_size():
+def check_line_size(g_l_n):
+    file = open(g_l_n, 'r')
+    for line in file:
+        split_line = line.split(';')
+        if len(split_line[5]) >= 41:
+            print(split_line[5])
+    file.close()
+
+
+# Function for checking if remain line to switch
+# Return True or False according to search result
+def the_check():
     for g_l_n in global_file_name:
-        row_count = 1
-        column_count = 5
-        for line in open(g_l_n, 'r'):
-            row_count = row_count + 1
+        last_line = ""
+        file = open(g_l_n, 'r')
+        for line in file:
             split_line = line.split(';')
             if len(split_line[5]) >= 41:
-                print(split_line[5])
+                last_line = split_line[5]
+        file.close()
+        if last_line == "":
+            return False
+        else:
+            return True
 
 
 # Function to find and switch phrase
-# Input: char_for_change = string, char_for_find = string
+# Input: char_for_change = string, char_for_find = string, g_l_n = file name
 # Return = number of change
-def change_char():
+def change_char(g_l_n):
     char_for_change = input("Find characters: ")
     char_for_find = input("Change to: ")
+    for line in fileinput.input(g_l_n, inplace=2):
+        print(line.replace(char_for_change, char_for_find), end='')
+    fileinput.close()
+
+
+# Function start
+def start():
+    save_file_name()
     for g_l_n in global_file_name:
         if os.path.isdir(g_l_n):
             list_files(g_l_n)
             continue
-        for line in fileinput.input(g_l_n, inplace=2):
-            print(line.replace(char_for_change, char_for_find), end='')
-        fileinput.close()
+        check_line_size(g_l_n)
+        switch_phrase = input("Do you want to switch phrase? [Y/N]")
+        if switch_phrase == 'Y' or switch_phrase == 'y':
+            change_char(g_l_n)
+        if the_check():
+            start()
 
 
-save_file_name()
-check_line_size()
-switch_phrase = input("Do you want to switch phrase for this line? [Y/N]")
-if switch_phrase == 'Y' or switch_phrase == 'y':
-    change_char()
+start()
+
 input("\n Process complete")
