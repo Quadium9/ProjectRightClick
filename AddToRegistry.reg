@@ -1,0 +1,25 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\Run script]
+"MUIVerb" = "My Tool"
+"subcommands"=""
+
+[HKEY_CLASSES_ROOT\*\shell\Run script\shell]
+
+[HKEY_CLASSES_ROOT\*\shell\Run script\shell\SwitchChar]
+@="Switch Char"
+
+[HKEY_CLASSES_ROOT\*\shell\Run script\shell\SwitchChar\command]
+@="\"D:\\Desktop\\ProjectRightClick\\dist\\SwitchChar\\SwitchChar.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\*\shell\Run script\shell\CheckSize]
+@="Check Size"
+
+[HKEY_CLASSES_ROOT\*\shell\Run script\shell\CheckSize\command]
+@="\"D:\\Desktop\\ProjectRightClick\\dist\\CheckSize\\CheckSize.exe\" \"%1\""
+
+
+
+
+
+
