@@ -1,8 +1,9 @@
 import os
 import shutil
+from distutils.dir_util import copy_tree
 import sys
+import time
 import ctypes
-import subprocess
 
 
 def registry():
@@ -10,14 +11,6 @@ def registry():
         file = open("AddToRegistry.reg", "w")
         file.close()
     file = open("AddToRegistry.reg", 'r+')
-    cwd = os.getcwd()
-    o = R'\\'
-    ccwd = ""
-    for char in cwd:
-        if char == o[0]:
-            ccwd = ccwd + o[0] + o[0]
-        else:
-            ccwd += char
     file.write(R"Windows Registry Editor Version 5.00" + '\n' + '\n'
                + R'[HKEY_CLASSES_ROOT\*\shell\Run script] ' + '\n'
                + R'"MUIVerb" = "My Tool" ' + '\n'
@@ -26,41 +19,49 @@ def registry():
                + R'[HKEY_CLASSES_ROOT\*\shell\Run script\shell\SwitchChar]' + '\n'
                + R'@="Switch Char"' + '\n' + '\n'
                + R'[HKEY_CLASSES_ROOT\*\shell\Run script\shell\SwitchChar\command]' + '\n'
-               + R'@=' + '''"''' + R"\"" + ccwd + R"\\" + R'''SwitchChar\\SwitchChar.exe\" \"%1\""''' + '\n' + '\n'
+               + R'@=' + '''"''' + R"\"" + R'''C:\\Program Files (x86)\\ProjectRightClick\\SwitchChar.exe\" \"%1\""''' + '\n' + '\n'
                + R'[HKEY_CLASSES_ROOT\*\shell\Run script\shell\CheckSize]' + '\n'
                + R'@="Check Size"' + '\n' + '\n'
                + R'[HKEY_CLASSES_ROOT\*\shell\Run script\shell\CheckSize\command]' + '\n'
-               + R'@=' + '''"''' + R"\"" + ccwd + R"\\" + R'''CheckSize\\CheckSize.exe\" \"%1\""''' + '\n' + '\n')
-    for line in file:
-        print(line, end="")
+               + R'@=' + '''"''' + R"\"" + R'''C:\\Program Files (x86)\\ProjectRightClick\\CheckSize.exe\" \"%1\""''' + '\n' + '\n')
     file.close()
+    for line in open("AddToRegistry.reg", 'r'):
+        print(line, end="")
 
 
 def is_admin():
     try:
+        print("Admin is true")
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:
         return False
 
 
 def copy_file():
-    original = os.getcwd() + '\\CheckSize\\CheckSize.exe'
+    original = os.getcwd() + '\\CheckSize'
     target = 'C:\\Program Files (x86)\\ProjectRightClick\\'
-    shutil.copy(original, target)
-    original = os.getcwd() + '\\SwitchChar\\SwitchChar.exe'
+    copy_tree(original, target)
+    print(original)
+    print(target)
+    original = os.getcwd() + '\\SwitchChar'
     target = 'C:\\Program Files (x86)\\ProjectRightClick\\'
-    shutil.copy(original, target)
+    copy_tree(original, target)
+    print(original)
+    print(target)
 
 
 if is_admin():
     registry()
     directory = os.path.join("C:\\", 'Program Files (x86)', 'ProjectRightClick')
+    print(directory)
     if os.path.exists(directory):
         shutil.rmtree('C:\\Program Files (x86)\\ProjectRightClick')
     os.mkdir(directory)
     copy_file()
+    print("Installing registry file...")
+    time.sleep(3)
     os.system("regedit /s AddToRegistry.reg")
+    print("Done...")
     input("Process complete. Press enter...")
 else:
     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
-
