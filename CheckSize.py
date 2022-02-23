@@ -31,8 +31,9 @@ def check_line_size(g_l_n):
     file = open(g_l_n, 'r')
     for line in file:
         split_line = line.split(';')
-        if len(split_line[5]) >= 41:
-            print(split_line[5])
+        if len(split_line[4]) >= 45:
+            print(split_line[4])
+
     file.close()
 
 
@@ -44,8 +45,8 @@ def the_check():
         file = open(g_l_n, 'r')
         for line in file:
             split_line = line.split(';')
-            if len(split_line[5]) >= 41:
-                last_line = split_line[5]
+            if len(split_line[4]) >= 45:
+                last_line = split_line[4]
         file.close()
         if last_line == "":
             return False

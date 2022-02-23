@@ -10,11 +10,17 @@ Windows Registry Editor Version 5.00
 @="Switch Char"
 
 [HKEY_CLASSES_ROOT\*\shell\Run script\shell\SwitchChar\command]
-@="\"C:\\Program Files (x86)\\ProjectRightClick\\SwitchChar.exe\" \"%1\""
+@="\"C:\\Program Files (x86)\\ProjectRightClick\\SwitchChar\\SwitchChar.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\*\shell\Run script\shell\RemoveSpace]
+@="XML Gealan"
+
+[HKEY_CLASSES_ROOT\*\shell\Run script\shell\RemoveSpace\command]
+@="\"C:\\Program Files (x86)\\ProjectRightClick\\RemoveSpace\\RemoveSpace.exe\" \"%1\""
 
 [HKEY_CLASSES_ROOT\*\shell\Run script\shell\CheckSize]
 @="Check Size"
 
 [HKEY_CLASSES_ROOT\*\shell\Run script\shell\CheckSize\command]
-@="\"C:\\Program Files (x86)\\ProjectRightClick\\CheckSize.exe\" \"%1\""
+@="\"C:\\Program Files (x86)\\ProjectRightClick\\CheckSize\\CheckSize.exe\" \"%1\""
 
