@@ -1,6 +1,7 @@
 import sys
 import fileinput
 import os
+import time
 
 # Zmienna przechowujaca scieki do plikow
 global_file_name = []
@@ -28,16 +29,19 @@ def list_files(startpath):
 # Input: char_for_change = string, char_for_find = string
 # Return = number of change
 def change_char():
-    char_for_change = input("Find characters: ")
-    char_for_find = input("Change it to: ")
+    print("Search for characters ';;;' ")
+
     for g_l_n in global_file_name:
+        count = 0
         if os.path.isdir(g_l_n):
             list_files(g_l_n)
             continue
         for line in fileinput.input(g_l_n, inplace=2):
-            print(line.replace(char_for_change, char_for_find), end='')
+            print(line.replace(";;;", ";;0;"), end='')
+            count += 1
+        print('Number of searched line ' + str(count))
         fileinput.close()
-
+    time.sleep(2)
 
 save_file_name()
 change_char()

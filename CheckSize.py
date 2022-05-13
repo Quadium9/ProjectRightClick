@@ -3,7 +3,7 @@ import os
 import fileinput
 
 # Variable for save file name in list
-global_file_name = []
+global_file_name = ['prod_def.scm']
 
 
 # Function for get file and created list of it
@@ -31,8 +31,8 @@ def check_line_size(g_l_n):
     file = open(g_l_n, 'r')
     for line in file:
         split_line = line.split(';')
-        if len(split_line[4]) >= 45:
-            print(split_line[4])
+        if len(split_line[5]) >= 44:
+            print(split_line[5])
 
     file.close()
 
@@ -45,7 +45,7 @@ def the_check():
         file = open(g_l_n, 'r')
         for line in file:
             split_line = line.split(';')
-            if len(split_line[4]) >= 45:
+            if len(split_line[5]) >= 44:
                 last_line = split_line[4]
         file.close()
         if last_line == "":
@@ -71,7 +71,6 @@ def start():
     for g_l_n in global_file_name:
         if os.path.isdir(g_l_n):
             list_files(g_l_n)
-            continue
         check_line_size(g_l_n)
         switch_phrase = input("Do you want to switch phrase? [Y/N]")
         if switch_phrase == 'Y' or switch_phrase == 'y':

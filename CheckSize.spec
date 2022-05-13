@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-a = Analysis(['CheckSize.py'],
+a = Analysis(['CheckSize.py', 'SwitchChar.py'],
              pathex=[],
              binaries=[],
              datas=[],
